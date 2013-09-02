@@ -1,0 +1,233 @@
+@main {
+	
+<form action="@routes.Paypal.ipn" method="post" name="ipnform" class="form-horizontal" autocomplete="off"> 
+<h2 class="mainhead" for="ipnfields">General information</h2> 
+	<div class="display_heading" id="ipnfields"> 
+		<!-- STARTS HERE - Mandatory Fields for IPN --> 
+		<div class="control-group  mandatory_row"> 
+			<label class="control-label" for="notify_url">IPN handler URL</label> 
+			<div class="controls">
+				<input type="text" value="" name="notify_url" autocomplete="off"> 
+			</div> 
+		</div> 
+		<div class="mandatory_row control-group"> 
+			<label class="control-label" for="ipn_type">Transaction type</label>
+			<div class="controls"> 
+				<select name="ipn_type" id="ipn_type" autocomplete="off">   
+					<option value="0">- Select -</option>  
+					<option value="1">eCheck - pending</option>  
+					<option value="2">eCheck - declined</option>  
+					<option value="3">eCheck - complete</option>  
+					<option value="4">Express Checkout</option>  
+					<option value="5">Cart checkout</option>  
+					<option value="6" selected="selected">Web Accept</option>  
+					<option value="7">Refund</option>  
+					<option value="8">eBay checkout</option>  
+					<option value="9">Reversal</option>  
+					<option value="10">Canceled reversal</option>   
+					</select> 
+				</div> </div> 
+				<!-- ENDS HERE - Mandatory Fields for IPN --> 
+				<!-- STARTS HERE - Optional Fields for IPN --> 
+				<div id="ipn_details">
+					<!-- -------------------- --> 
+					<!-- IPN Optional Fields --> 
+					<!-- -------------------- -->  
+					<div class="help">Notification field names appear below. You can change default values to any value. Keep in mind that the simulator doesn't validate any of the data being used.
+				</div>  
+				<!-- STARTS HERE - PAYMENT INFORMATION -->  
+				<h2 for="payment_info">Payment information</h2>  
+				<div class="control-group "> 
+					<label class="control-label">payment_type</label> 
+					<div class="controls">    
+						<label class="radio"><input type="radio" value="echeck" name="payment_type" autocomplete="off">echeck </label>  
+						<label class="radio"> <input type="radio" value="instant" name="payment_type" checked="selected" autocomplete="off">instant </label>      
+					</div> 
+				</div>  
+				<div class="control-group "> 
+					<label class="control-label">payment_date</label> 
+					<div class="controls">   
+						<input type="text" value="07:42:03 2 Sep 2013 PDT" name="payment_date" autocomplete="off">   
+					</div> 
+				</div>  
+				<div class="control-group "> 
+					<label class="control-label">payment_status</label> 
+					<div class="controls">    
+						<select name="payment_status" autocomplete="off">   
+							<option value="[- Please Select -]">[- Please Select -]</option>
+							<option value="Canceled_Reversal">Canceled_Reversal</option>  
+							<option value="Completed" selected="selected">Completed</option>  
+							<option value="Denied">Denied</option>  
+							<option value="Expired">Expired</option>  
+							<option value="Failed">Failed</option>  
+							<option value="In-Progress">In-Progress</option>  
+							<option value="Partially_Refunded">Partially_Refunded</option>  
+							<option value="Pending">Pending</option>  
+							<option value="Processed">Processed</option>  
+							<option value="Refunded">Refunded</option>  
+							<option value="Reversed">Reversed</option>  
+							<option value="Voided">Voided</option>   
+						</select>  
+					</div> 
+				</div>  
+				<div class="control-group hide extra"> 
+					<label class="control-label">pending_reason</label> 
+					<div class="controls">   
+						<input type="text" value="" name="pending_reason" class="hide extra" autocomplete="off">   
+					</div> 
+				</div>   
+				<!-- ENDS HERE - PAYMENT INFORMATION --> 
+				<!-- STARTS HERE - BUYER INFORMATION -->  
+				<h2 for="buyer_info">Buyer information</h2>  
+				<div class="control-group "> 
+					<label class="control-label">address_status</label> 
+					<div class="controls">    
+						<label class="radio"><input type="radio" value="unconfirmed" name="address_status" autocomplete="off">unconfirmed </label>  
+						<label class="radio"><input type="radio" value="confirmed" name="address_status" checked="selected" autocomplete="off">confirmed </label>      
+					</div> 
+				</div>  
+				<div class="control-group "> 
+					<label class="control-label">payer_status</label> 
+					<div class="controls">    
+						<label class="radio"><input type="radio" value="unverified" name="payer_status" autocomplete="off">unverified </label>  
+						<label class="radio"> <input type="radio" value="verified" name="payer_status" checked="selected" autocomplete="off">verified </label>      
+					</div> 
+				</div>  
+				<div class="control-group "> 
+					<label class="control-label">first_name</label> 
+					<div class="controls">   
+						<input type="text" value="John" name="first_name" autocomplete="off">   
+					</div> 
+				</div>  
+				<div class="control-group "> 
+					<label class="control-label">last_name</label> 
+					<div class="controls">   
+						<input type="text" value="Smith" name="last_name" autocomplete="off">   
+					</div> 
+				</div>  
+				<div class="control-group "> 
+					<label class="control-label">payer_email</label> 
+					<div class="controls">   
+						<input type="text" value="buyer@@paypalsandbox.com" name="payer_email" autocomplete="off">   
+					</div> 
+				</div>  
+				<div class="control-group "> 
+					<label class="control-label">payer_id</label> 
+					<div class="controls">   
+						<input type="text" value="TESTBUYERID01" name="payer_id" autocomplete="off">   
+					</div> 
+				</div>  
+				<div class="control-group "> 
+					<label class="control-label">address_name</label> 
+					<div class="controls">   
+						<input type="text" value="John Smith" name="address_name" autocomplete="off">   
+					</div> 
+				</div>  
+				<div class="control-group "> 
+					<label class="control-label">address_country</label> 
+					<div class="controls">    
+						<select name="address_country" autocomplete="off">   
+							<option value="[- Please Select -]">[- Please Select -]</option>  
+							<option value="United States" selected="selected">United States</option>   
+						</select>  
+					</div> 
+				</div>  
+				<div class="control-group "> 
+					<label class="control-label">address_country_code</label> 
+					<div class="controls">    
+						<select name="address_country_code" autocomplete="off">   <option value="[- Please Select -]">[- Please Select -]</option>  <option value="US" selected="selected">US</option>   </select>  </div> </div>  <div class="control-group "> <label class="control-label">address_zip</label> <div class="controls">   <input type="text" value="95131" name="address_zip" autocomplete="off">   </div> </div>  <div class="control-group "> <label class="control-label">address_state</label> <div class="controls">   <input type="text" value="CA" name="address_state" autocomplete="off">   </div> </div>  <div class="control-group "> <label class="control-label">address_city</label> <div class="controls">   <input type="text" value="San Jose" name="address_city" autocomplete="off">   </div> </div>  <div class="control-group "> <label class="control-label">address_street</label> <div class="controls">   <input type="text" value="123, any street" name="address_street" autocomplete="off">   </div> </div>   <!-- ENDS HERE - BUYER INFORMATION --> <!-- STARTS HERE - BASIC INFORMATION -->  <h2 for="basic_info">Basic information</h2>  <div class="control-group "> <label class="control-label">business</label> <div class="controls">   <input type="text" value="seller@@paypalsandbox.com" name="business" autocomplete="off">   </div> </div>  <div class="control-group "> <label class="control-label">receiver_email</label> <div class="controls">   <input type="text" value="seller@@paypalsandbox.com" name="receiver_email" autocomplete="off">   </div> </div>  <div class="control-group "> <label class="control-label">receiver_id</label> <div class="controls">   <input type="text" value="seller@@paypalsandbox.com" name="receiver_id" autocomplete="off">   </div> </div>  <div class="control-group "> <label class="control-label">residence_country</label> <div class="controls">   <input type="text" value="US" name="residence_country" autocomplete="off">   </div> </div>  <div class="control-group "> <label class="control-label">item_name</label> <div class="controls">   <input type="text" value="something" name="item_name" autocomplete="off">   </div> </div>  <div class="control-group "> <label class="control-label">item_number</label> <div class="controls">   <input type="text" value="AK-1234" name="item_number" autocomplete="off">   </div> </div>  <div class="control-group hide extra"> <label class="control-label">item_name1</label> <div class="controls">   <input type="text" value="" name="item_name1" class="hide extra" autocomplete="off">   </div> </div>  <div class="control-group hide extra"> <label class="control-label">item_number1</label> <div class="controls">   <input type="text" value="" name="item_number1" class="hide extra" autocomplete="off">   </div> </div>  <div class="control-group "> <label class="control-label">quantity</label> <div class="controls">   <input type="text" value="1" name="quantity" autocomplete="off">   </div> </div>  <div class="control-group hide extra"> <label class="control-label">quantity1</label> <div class="controls">   <input type="text" value="" name="quantity1" class="hide extra" autocomplete="off">   </div> </div>  <div class="control-group "> <label class="control-label">shipping</label> <div class="controls">   <input type="text" value="3.04" name="shipping" autocomplete="off">   </div> </div>  <div class="control-group "> <label class="control-label">tax</label> <div class="controls">   <input type="text" value="2.02" name="tax" autocomplete="off">   </div> </div>   <!-- ENDS HERE - BASIC INFORMATION --> <!-- STARTS HERE - CURRENCY AND CURRENCY EXCHANGE -->  <h2 for="currrency_exchange">Currency and currrency exchange</h2>  <div class="control-group "> <label class="control-label">mc_currency</label> <div class="controls">    <select name="mc_currency" autocomplete="off">   <option value="[- Please Select -]">[- Please Select -]</option>  <option value="USD" selected="selected">USD</option>   </select>  </div> </div>  <div class="control-group "> <label class="control-label">mc_fee</label> <div class="controls">   <input type="text" value="0.44" name="mc_fee" autocomplete="off">   </div> </div>  <div class="control-group "> <label class="control-label">mc_gross</label> <div class="controls">   <input type="text" value="12.34" name="mc_gross" autocomplete="off">   </div> </div>  <div class="control-group "> <label class="control-label">mc_gross1</label> <div class="controls">   <input type="text" value="9.34" name="mc_gross1" autocomplete="off">   </div> </div>  <div class="control-group hide extra"> <label class="control-label">mc_handling</label> <div class="controls">   <input type="text" value="" name="mc_handling" class="hide extra" autocomplete="off">   </div> </div>  <div class="control-group hide extra"> <label class="control-label">mc_handling1</label> <div class="controls">   <input type="text" value="" name="mc_handling1" class="hide extra" autocomplete="off">   </div> </div>  <div class="control-group hide extra"> <label class="control-label">mc_shipping</label> <div class="controls">   <input type="text" value="" name="mc_shipping" class="hide extra" autocomplete="off">   </div> </div>  <div class="control-group hide extra"> <label class="control-label">mc_shipping1</label> <div class="controls">   <input type="text" value="" name="mc_shipping1" class="hide extra" autocomplete="off">   </div> </div>   <!-- ENDS HERE - CURRENCY AND CURRENCY EXCHANGE --> <!-- STARTS HERE - TRANSACTION FIELDS -->  <h2 for="transaction_fields">Transaction fields</h2>  <div class="control-group "> 
+						<label class="control-label">txn_type</label> 
+						<div class="controls">   
+							<input type="text" value="web_accept" name="txn_type" autocomplete="off">   
+						</div> 
+					</div>  
+					<div class="control-group "> 
+						<label class="control-label">txn_id</label> 
+						<div class="controls">   
+							<input type="text" value="1011147628" name="txn_id" autocomplete="off">   
+						</div> 
+					</div>  
+					<div class="control-group hide extra"> 
+						<label class="control-label">parent_txn_id</label> 
+						<div class="controls">   
+							<input type="text" value="" name="parent_txn_id" class="hide extra" autocomplete="off">   
+						</div> 
+					</div>  
+					<div class="control-group "> 
+						<label class="control-label">notify_version</label> 
+						<div class="controls">   
+							<input type="text" value="2.1" name="notify_version" autocomplete="off">   
+						</div> 
+					</div>   
+					<!-- ENDS HERE - TRANSACTION FIELDS --> 
+					<!-- STARTS HERE - EBAY AUCTION -->  
+					<h2 class="control-group extra hide" for="ebay_auction">eBay auction</h2>  
+						<div class="control-group hide extra"> 
+							<label class="control-label">auction_buyer_id</label> 
+							<div class="controls">   
+								<input type="text" value="" name="auction_buyer_id" class="hide extra" autocomplete="off">   
+							</div> 
+						</div>  
+						<div class="control-group hide extra"> 
+							<label class="control-label">auction_closing_date</label> 
+							<div class="controls">   
+								<input type="text" value="" name="auction_closing_date" class="hide extra" autocomplete="off">   
+							</div> 
+						</div>  
+						<div class="control-group hide extra"> 
+							<label class="control-label">for_auction</label> 
+							<div class="controls">   
+								<input type="text" value="" name="for_auction" class="hide extra" autocomplete="off">   
+							</div> 
+						</div>   
+						<!-- ENDS HERE - EBAY AUCTION --> 
+						<!-- STARTS HERE - REFUNDS/REVERSALS -->  
+						<h2 class="control-group extra hide" for="refunds_reversals">Refunds/reversals</h2>  
+						<div class="control-group hide extra"> 
+							<label class="control-label">reason_code</label> 
+							<div class="controls">   
+								<input type="text" value="" name="reason_code" class="hide extra" autocomplete="off">   
+							</div> 
+						</div>  
+						<div class="control-group hide extra"> 
+							<label class="control-label">receipt_ID</label> 
+							<div class="controls">   
+								<input type="text" value="" name="receipt_ID" class="hide extra" autocomplete="off">   
+							</div> 
+						</div>   
+						<!-- ENDS HERE - REFUNDS/REVERSALS --> 
+						<!-- STARTS HERE - ADVANCED/CUSTOM -->  
+						<h2 for="advanced_custom">Advanced and custom information</h2>  
+						<div class="control-group "> 
+							<label class="control-label">custom</label> 
+							<div class="controls">   
+								<input type="text" value="xyz123" name="custom" autocomplete="off">   
+							</div> 
+						</div>  
+						<div class="control-group hide extra"> 
+							<label class="control-label">invoice</label> 
+							<div class="controls">   
+							<input type="text" value="abc1234" name="invoice" class="hide extra" autocomplete="off">   
+							</div> 
+						</div>   
+						<!-- ENDS HERE - ADVANCED/CUSTOM --> 
+						<!-- Show All Fields Check box -->  
+						<div class="control-group "> 
+							<div class="controls">  
+							<label class="checkbox"> 
+							<input type="checkbox" id="showAdditional" autocomplete="off"> Show all fields </label> 
+						</div> 
+					</div> 
+					<!-- ENDS HERE - Optional Fields for IPN --> 
+					<!-- STARTS HERE - IPN Buttons --> 
+					<div class="control-group "> 
+						<div class="controls"> 
+							<input type="submit" class="btn btn-primary" id="send_ipn_but" value="Send IPN" name="_send_ipn-session" autocomplete="off"> 
+						</div> 
+					</div> 
+					<!-- ENDS HERE - IPN Buttons -->  
+				</div>  
+			</div>
+		</form>
+
+}

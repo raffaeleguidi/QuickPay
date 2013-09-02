@@ -1,0 +1,60 @@
+@loremIpsum = @{new de.svenjacobs.loremipsum.LoremIpsum()}
+
+@import models._
+
+@main {
+
+<style type="text/css">
+	.placeholder {float: left; padding-right: 10px; padding-bottom: 10px;}
+</style>
+    
+    <h2>Welcome to QuickPay!</h2>
+    <p>@loremIpsum.getWords(100)<p/>@loremIpsum.getWords(50)</p>
+    
+    <h3>Two columns</h3>
+      <p>Get two columns <strong>starting at desktops and scaling to large desktops</strong>.</p>
+      <div class="row">
+        <div class="col-md-6">
+			<img class="placeholder" src="http://placehold.it/150x100" /> @loremIpsum.getWords(50)  	       	
+		</div>
+        <div class="col-md-6">
+			<img class="placeholder" src="http://placehold.it/150x100" /> @loremIpsum.getWords(50)  	       	
+		</div>
+      </div>
+    
+	<p align="left">
+	  <button type="button" class="btn btn-default">Default</button>
+	  <button type="button" class="btn btn-primary">Primary</button>
+	  <button type="button" class="btn btn-success">Success</button>
+	  <button type="button" class="btn btn-info">Info</button>
+	  <button type="button" class="btn btn-warning">Warning</button>
+	  <button type="button" class="btn btn-danger">Danger</button>
+	  <button type="button" class="btn btn-link">Link</button>
+	</p>
+    
+	<br />
+	     
+@*
+    <h3>@users.size users found</h3>
+    
+    <ul>
+	@for(u <- users) {
+	  <li>@u.name (id=@u.asInstanceOf[ sorm.Persisted ].id, card=@u.cardId)</li>
+	} 
+	</ul>
+	
+    <h3>@hotels.size hotels found</h3>
+    <ul>
+	@for(h <- hotels) {
+	  <li><h4>@h.name</h4>
+	  <p>@h.description</p>
+	  	<ul>
+	  		@for(a <- h.accomodations) {
+			  <li>@a.name &euro;@a.price</li>
+			}
+	  	</ul>
+	  </li>
+	} 
+	</ul>
+*@	
+}

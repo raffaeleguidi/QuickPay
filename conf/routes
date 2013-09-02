@@ -1,0 +1,33 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index
+
+
+# Rooms list (look at the default values for pagination parameters)
+GET     /items                  	controllers.Application.list(p:Int ?= 0, s:Int ?= 2, f ?= "")
+
+# Add computer
+GET     /items/new              	controllers.Application.create
+POST    /items						controllers.Application.save
+#
+# Edit existing room
+GET     /items/:id              	controllers.Application.edit(id:Long)
+POST    /items/:id              	controllers.Application.update(id:Long)
+#
+# Delete a room
+POST    /items/:id/delete       	controllers.Application.delete(id:Long)
+
+#PayPal IPN
+GET 	/testIPN					controllers.Paypal.test
+POST 	/ipn						controllers.Paypal.ipn
+
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+# Map WebJars resources
+GET     /webjars/*file              controllers.WebJarAssets.at(file)

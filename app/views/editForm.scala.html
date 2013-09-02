@@ -1,0 +1,40 @@
+@(id: Long, itemForm: Form[Item], shops : Seq[(String, String)])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.f) }
+
+@main {
+    
+    <h2>@Messages("items.edit.title", itemForm("name").value.get)</h2>
+    
+    @form(routes.Application.update(id)) {
+        
+        <fieldset>
+        
+            @inputText(itemForm("name"), '_label -> "Item name")
+            @inputText(itemForm("price"), '_label -> "Item price")
+            @inputText(itemForm("introduced"), '_label -> "Introduced date")
+            @inputText(itemForm("discontinued"), '_label -> "Discontinued date")
+            
+            @select(
+                itemForm("shop"), 
+                shops, 
+                '_label -> "Shop", '_default -> "-- Choose a shop --",
+                '_showConstraints -> false
+            )
+        
+        </fieldset>
+        
+        <div class="actions" style="padding-top: 1em">
+            <input type="submit" value="Save" class="btn btn-primary btn-sm"> 
+            <a href="@routes.Application.list()" class="btn btn-default btn-sm">Cancel</a> or  
+		    @form(routes.Application.delete(id), 'class -> "topRight") {
+		        <input type="submit" value="Delete this item" class="btn btn-danger btn-sm">
+		    }
+        </div>
+        
+    }
+    
+    
+}

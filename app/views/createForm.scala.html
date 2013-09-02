@@ -1,0 +1,39 @@
+@(itemForm: Form[Item], shops: Seq[(String, String)])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.f) } 
+
+@main {
+    
+    <h2>@Messages("items.add.title")</h2>
+    
+    @form(routes.Application.save()) {
+        
+        <fieldset>
+        
+            @inputText(itemForm("name"), '_label -> "Item name")
+            @inputText(itemForm("price"), '_label -> "Item price")
+            @inputText(itemForm("introduced"), '_label -> "Introduced date")
+            @inputText(itemForm("discontinued"), '_label -> "Discontinued date")
+
+            @select(
+                itemForm("shop"), 
+                shops, 
+                '_label -> "Shop", '_default -> "-- Choose a shop --",
+                '_showConstraints -> false
+            )
+            
+
+        </fieldset>
+        
+        <br />
+        
+        <div class="actions">
+            <input type="submit" value="Create this item" class="btn btn-primary btn-small"> or 
+            <a href="@routes.Application.list()" class="btn btn-default btn-small">Cancel</a> 
+        </div>
+        
+    }
+    
+}

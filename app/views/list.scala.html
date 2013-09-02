@@ -1,0 +1,127 @@
+@(currentPage: Page[(Item, Option[Shop])], currentOrderBy: Int, currentFilter: String)(implicit flash: play.api.mvc.Flash)
+
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage: Int, newOrderBy: Option[Int] = None) = @{
+    routes.Application.list(newPage, newOrderBy.map { orderBy =>
+        if(orderBy == scala.math.abs(currentOrderBy)) -currentOrderBy else orderBy
+    }.getOrElse(currentOrderBy), currentFilter)
+}
+
+@**********************************
+* Helper generating table headers *
+***********************************@
+@header(orderBy: Int, title: String) = {
+    <th class="col@orderBy header @if(scala.math.abs(currentOrderBy) == orderBy) @{if(currentOrderBy < 0) "headerSortDown" else "headerSortUp"}">
+        <a href="@link(0, Some(orderBy))">@title</a>
+    </th>
+}
+
+@main {
+    
+    <h2>@Messages("items.list.title", currentPage.total)</h2>
+
+    @flash.get("success").map { message =>
+        <div class="alert-message warning">
+            <strong>Done!</strong> @message
+        </div>
+    }
+
+    <div id="actions">
+        
+        <div style="float:left">
+        @helper.form(action=routes.Application.list()) {
+            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by item name...">
+            <input type="submit" id="searchsubmit" value="Filter by name" class="btn btn-primary">
+        }
+        </div>
+        <div style="float:right">
+        	<a class="btn btn-success" id="add" href="@routes.Application.create()">Add a new item</a>
+        </div>
+        
+    </div>
+    
+    @Option(currentPage.items).filterNot(_.isEmpty).map { items =>
+        
+        <table class="items table table-striped">
+            <thead>
+                <tr>
+                    @header(2, "Shop")
+                    @header(3, "Item")
+                    @header(4, "Price")
+                    @header(5, "Since")
+                    @header(6, "To")
+                    @header(7, "Action")
+                </tr>
+            </thead>
+            <tbody>
+
+                @items.map { 
+                    case (item, shop) => {
+                        <tr>
+                            <td>
+                                @shop.map(_.name).getOrElse { <em>-</em> }
+                            </td>
+                            <td>
+                            	<a href="@routes.Application.edit(item.id.get)">@item.name</a>
+                            </td>
+                            <td>
+                            	<a href="@routes.Application.edit(item.id.get)">@item.price</a>
+                            </td>
+                            <td>
+                                @item.introduced.map(_.format("dd MMM yyyy")).getOrElse { <em>-</em> }
+                            </td>
+                            <td>
+                                @item.discontinued.map(_.format("dd MMM yyyy")).getOrElse { <em>-</em> }
+                            </td>
+                            <td>
+	                            <button type="button" class="btn btn-sm btn-success">Similar</button>
+	                            <button type="button" class="btn btn-sm btn-info">Info</button>
+	                            <button type="button" class="btn btn-sm btn-primary">Buy</button>
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+
+        <div id="pagination" class="pagination">
+            <div>
+                @currentPage.prev.map { page =>
+                    <span class="prev">
+                        <a class="btn btn-sm btn-default" href="@link(page)">&larr; Previous</a>
+                    </span> 
+                }.getOrElse {
+                    <span class="prev disabled">
+                        <a class="btn btn-sm btn-default" >&larr; Previous</a>
+                    </span>
+                }
+                <span class="current">
+                    <a>Displaying @(currentPage.offset + 1) to @(currentPage.offset + items.size) of @currentPage.total</a>
+                </span>
+                @currentPage.next.map { page =>
+                    <span class="next">
+                        <a class="btn btn-sm btn-default" href="@link(page)">Next &rarr;</a>
+                    </span> 
+                }.getOrElse {
+                    <span class="next disabled">
+                        <a class="btn btn-sm btn-default" >Next &rarr;</a>
+                    </span>
+                }
+            </div>
+        </div>
+        
+    }.getOrElse {
+        
+        <div class="well">
+            <em>Nothing to display</em>
+        </div>
+        
+    }
+
+        
+}
+
+            
