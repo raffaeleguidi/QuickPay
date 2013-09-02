@@ -12921,7 +12921,7 @@
 [0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.scala-sbt#cache;0.12.2!cache.jar[0m
 [0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.scala-sbt#test-agent;0.12.2!test-agent.jar[0m
 [0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.scala-tools.testing#test-interface;0.5!test-interface.jar[0m
-[0m[[0mdebug[0m] [0m:: resolution report :: resolve 7238ms :: artifacts dl 183ms[0m
+[0m[[0mdebug[0m] [0m:: resolution report :: resolve 6438ms :: artifacts dl 254ms[0m
 [0m[[0mdebug[0m] [0mNbr of module to sort : 61[0m
 [0m[[0mdebug[0m] [0mSort dependencies of : play#sbt-plugin;2.1.3 / Number of dependencies = 18[0m
 [0m[[0mdebug[0m] [0mSort dependencies of : play#sbt-link;2.1.3 / Number of dependencies = 1[0m
@@ -15106,5 +15106,5 @@
 [0m[[0mdebug[0m] [0m	report for default#default-ff0d19;0.1-SNAPSHOT docs produced in /media/rough/storage/storage/development/QuickPay/project/target/resolution-cache/reports/default-default-ff0d19/docs-resolved.xml[0m
 [0m[[0mdebug[0m] [0mNbr of module to sort : 0[0m
 [0m[[0mdebug[0m] [0m	report for default#default-ff0d19;0.1-SNAPSHOT pom produced in /media/rough/storage/storage/development/QuickPay/project/target/resolution-cache/reports/default-default-ff0d19/pom-resolved.xml[0m
-[0m[[0mdebug[0m] [0m	resolve done (7238ms resolve - 183ms download)[0m
+[0m[[0mdebug[0m] [0m	resolve done (6438ms resolve - 254ms download)[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
