@@ -33,17 +33,16 @@ object Paypal extends Controller {
 	
 	import collection.mutable.HashMap
 	
-	def parseParams(body: String) = {
+	def parseParams(body: String): HashMap[String,List[String]] = {
 	  val map = new HashMap[String,List[String]]() 
-	  val list = URLDecoder.decode(body, "UTF-8").split("&")
-	  list.foreach{ case (v) =>
-        val pair = v.split("=")
-        if (pair.length>1) {
-        	val l = map.get(pair(0)) match {
-			  case Some(list: List[String]) =>
-			    list :+ pair(1)
+	  URLDecoder.decode(body, "UTF-8").split("&").foreach { keyValue =>
+        val kvList = keyValue.split("=") 
+        if (kvList.length > 1) {
+        	val l = map.get(kvList(0)) match {
+			  case Some(values: List[String]) =>
+			    values :+ kvList(1)
 			  case None =>
-			    map.put(pair(0), List(pair(1)))
+			    map.put(kvList(0), List(kvList(1)))
 			}
         }
       }
