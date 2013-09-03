@@ -26,62 +26,54 @@ object Paypal extends Controller {
 	    "txn_id" -> longNumber(min=1)
 	  )
 	)
-
     
-    //http://stackoverflow.com/questions/12711713/how-to-implement-a-paypal-ipn-controller-in-java-using-play-2-0
-
-	def urlEncode(in : String) = URLEncoder.encode(in, "UTF-8")
-	def paramsToUrlParams(params: List[(String, String)]): String = params.map {
-		case (n, v) => urlEncode(n) + "=" + urlEncode(v)
-	}.mkString("&")
-	
 	def test = Action {
 	  Ok(html.testIpn())
 	}
-
 	
-	def ipn = Action(parse.tolerantText) { implicit request =>
-//	  see https://github.com/theon/scala-uri
-	  
-//	  val txn_id = uri.query.params.get("txn_id").get(0)
-//	  val txn_type = uri.query.params.get("txn_type").get(0)
-//	  val payment_status = uri.query.params.get("payment_status").get(0)
-//	  Logger.info(s"Verifying txn_type=$txn_type, payment_status=$payment_status, txn_id=$txn_id")
-//
-//	  Logger.info(str)
-	  //val list = URLDecoder.decode("txn_id=1&txn_type=web%20transaction", "UTF-8").split("&")
-	  val list = URLDecoder.decode(request.body, "UTF-8").split("&")
+	import collection.mutable.HashMap
+	
+	def parseParams(body: String) = {
+	  val map = new HashMap[String,List[String]]() 
+	  val list = URLDecoder.decode(body, "UTF-8").split("&")
 	  list.foreach{ case (v) =>
-        //Logger.info(s"v=$v")
         val pair = v.split("=")
-        Logger.info(pair(0) + " = ") // + pair(1))
+        if (pair.length>1) {
+        	val l = map.get(pair(0)) match {
+			  case Some(list: List[String]) =>
+			    list :+ pair(1)
+			  case None =>
+			    map.put(pair(0), List(pair(1)))
+			}
+        }
       }
-	  Ok("")
-//	  
-//
-//	  
-//		//val (txn_type, payment_status, txn_id) = ipnForm.bindFromRequest.get
-//	  	Async {
-//			//Logger.info(s"Verifying txn_type=$txn_type, payment_status=$payment_status, txn_id=$txn_id")
-////			Logger.info(s"request.body=$request.body.asText.toString")
-//			val body = request.body
-//			Logger.info(body)
-////		    WS.url(url).post(s"txn_id=$txn_id").map { response =>
-//		    WS.url(url).post(body).map { response =>
-//		      //Logger.info(s"txn_id $txn_id is " + response.body)
-//		      Ok(s"Response for txn_id $txn_id:  " + response.body)
-//		      //Ok(response.body)
-//		    }
-//		}  
+	  map
+	}
+	
+	def ipn = Action(parse.tolerantText) { implicit request =>	  
+		Async {
+		  	val params = parseParams(request.body)
+		  	val txn_id: Long = params.get("txn_id").get(0).toLong
+		  	val txn_type = params.get("txn_type").get(0)
+		  	Logger.info(s"txn_id=$txn_id, txn_type=$txn_type")
+		    WS.url(url).post(request.body).map { response =>
+		      
+		      response.body match {
+		        case "INVALID" => InternalServerError(s"Oops: txn_id $txn_id is invalid")
+		        case "OK" => Ok(s"Response for txn_id $txn_id:  " + response.body)
+		        case _ => InternalServerError(s"Unexpected response for txn_id $txn_id:  " + response.body)
+		      }			   
+			  
+		//	  params.foreach(l => {
+		//	    val key = l._1
+		//	    val values: List[String] = l._2
+		//	    Logger.info(key + "=" + values(0))   
+		//	  })
+			  
+		    }
+		}  
 	}
 
-	def ipn2 = Action { implicit request =>
-		val (txn_type, payment_status, txn_id) = ipnForm.bindFromRequest.get
-		Logger.info(s"Verifying txn_type=$txn_type, payment_status=$payment_status, txn_id=$txn_id")
-		Ok("done")
-	}
-	
-	
  /*
   * 
   * https://cms.paypal.com/cms_content/GB/en_GB/files/developer/IPN_JAVA_JSP.txt
