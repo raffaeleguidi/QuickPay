@@ -43,21 +43,45 @@ object Paypal extends Controller {
 	def ipn = Action(parse.tolerantText) { implicit request =>
 //	  see https://github.com/theon/scala-uri
 	  
-		//val (txn_type, payment_status, txn_id) = ipnForm.bindFromRequest.get
-	  	Async {
-			//Logger.info(s"Verifying txn_type=$txn_type, payment_status=$payment_status, txn_id=$txn_id")
-//			Logger.info(s"request.body=$request.body.asText.toString")
-			val body = request.body
-			Logger.info(body)
-//		    WS.url(url).post(s"txn_id=$txn_id").map { response =>
-		    WS.url(url).post(body).map { response =>
-		      //Logger.info(s"txn_id $txn_id is " + response.body)
-		      //Ok(s"Response for txn_id $txn_id:  " + response.body)
-		      Ok(response.body)
-		    }
-		}  
+//	  val txn_id = uri.query.params.get("txn_id").get(0)
+//	  val txn_type = uri.query.params.get("txn_type").get(0)
+//	  val payment_status = uri.query.params.get("payment_status").get(0)
+//	  Logger.info(s"Verifying txn_type=$txn_type, payment_status=$payment_status, txn_id=$txn_id")
+//
+//	  Logger.info(str)
+	  //val list = URLDecoder.decode("txn_id=1&txn_type=web%20transaction", "UTF-8").split("&")
+	  val list = URLDecoder.decode(request.body, "UTF-8").split("&")
+	  list.foreach{ case (v) =>
+        //Logger.info(s"v=$v")
+        val pair = v.split("=")
+        Logger.info(pair(0) + " = ") // + pair(1))
+      }
+	  Ok("")
+//	  
+//
+//	  
+//		//val (txn_type, payment_status, txn_id) = ipnForm.bindFromRequest.get
+//	  	Async {
+//			//Logger.info(s"Verifying txn_type=$txn_type, payment_status=$payment_status, txn_id=$txn_id")
+////			Logger.info(s"request.body=$request.body.asText.toString")
+//			val body = request.body
+//			Logger.info(body)
+////		    WS.url(url).post(s"txn_id=$txn_id").map { response =>
+//		    WS.url(url).post(body).map { response =>
+//		      //Logger.info(s"txn_id $txn_id is " + response.body)
+//		      Ok(s"Response for txn_id $txn_id:  " + response.body)
+//		      //Ok(response.body)
+//		    }
+//		}  
 	}
 
+	def ipn2 = Action { implicit request =>
+		val (txn_type, payment_status, txn_id) = ipnForm.bindFromRequest.get
+		Logger.info(s"Verifying txn_type=$txn_type, payment_status=$payment_status, txn_id=$txn_id")
+		Ok("done")
+	}
+	
+	
  /*
   * 
   * https://cms.paypal.com/cms_content/GB/en_GB/files/developer/IPN_JAVA_JSP.txt

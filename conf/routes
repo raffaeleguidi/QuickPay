@@ -21,9 +21,9 @@ POST    /items/:id              	controllers.Application.update(id:Long)
 POST    /items/:id/delete       	controllers.Application.delete(id:Long)
 
 #PayPal IPN
-GET 	/testIPN					controllers.Paypal.test
+GET 	/testIPN				controllers.Paypal.test
 POST 	/ipn						controllers.Paypal.ipn
-
+GET  /ipn2            controllers.Paypal.ipn2
 
 
 # Map static resources from the /public folder to the /assets URL path
