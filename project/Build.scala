@@ -10,7 +10,7 @@ object ApplicationBuild extends Build {
   val appDependencies = Seq(
     //"commons-httpclient" % "commons-httpclient" % "3.1",
     //"com.h2database" % "h2" % "1.3.168",
-    "com.github.theon" %% "scala-uri" % "0.3.6",
+    //"com.github.theon" %% "scala-uri" % "0.3.6",
     "mysql" % "mysql-connector-java" % "5.1.26",
     "org.webjars" % "webjars-play" % "2.1.0-1",
     "org.webjars" % "bootstrap" % "3.0.0",
