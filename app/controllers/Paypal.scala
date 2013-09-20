@@ -10,8 +10,9 @@ import play.api.data.validation.Constraints._
 import play.api.libs.ws.WS
 import play.api.libs.concurrent.Execution.Implicits._
 import java.net.{URLDecoder, URLEncoder}
-
 import views._
+import play.api.mvc.ActionBuilder
+import play.api.mvc.ActionBuilder
 
 object Paypal extends Controller {
  
@@ -49,28 +50,26 @@ object Paypal extends Controller {
 	  map
 	}
 	
-	def ipn = Action(parse.tolerantText) { implicit request =>	  
-		Async {
-		  	val params = parseParams(request.body)
-		  	val txn_id: Long = params.get("txn_id").get(0).toLong
-		  	val txn_type = params.get("txn_type").get(0)
-		  	Logger.info(s"txn_id=$txn_id, txn_type=$txn_type")
-		    WS.url(url).post(request.body).map { response =>
-		      
-		      response.body match {
-		        case "INVALID" => InternalServerError(s"Oops: txn_id $txn_id is invalid")
-		        case "OK" => Ok(s"Response for txn_id $txn_id:  " + response.body)
-		        case _ => InternalServerError(s"Unexpected response for txn_id $txn_id:  " + response.body)
-		      }			   
-			  
-		//	  params.foreach(l => {
-		//	    val key = l._1
-		//	    val values: List[String] = l._2
-		//	    Logger.info(key + "=" + values(0))   
-		//	  })
-			  
-		    }
-		}  
+	def ipn = Action.async(parse.tolerantText) { implicit request =>	  
+	  	val params = parseParams(request.body)
+	  	val txn_id: Long = params.get("txn_id").get(0).toLong
+	  	val txn_type = params.get("txn_type").get(0)
+	  	Logger.info(s"txn_id=$txn_id, txn_type=$txn_type")
+	    WS.url(url).post(request.body).map { response =>
+	      
+	      response.body match {
+	        case "INVALID" => InternalServerError(s"Oops: txn_id $txn_id is invalid")
+	        case "OK" => Ok(s"Response for txn_id $txn_id:  " + response.body)
+	        case _ => InternalServerError(s"Unexpected response for txn_id $txn_id:  " + response.body)
+	      }			   
+		  
+	//	  params.foreach(l => {
+	//	    val key = l._1
+	//	    val values: List[String] = l._2
+	//	    Logger.info(key + "=" + values(0))   
+	//	  })
+		  
+	    }
 	}
 
  /*

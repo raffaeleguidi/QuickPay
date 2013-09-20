@@ -16,7 +16,7 @@ object ApplicationBuild extends Build {
     "org.webjars" % "webjars-play" % "2.1.0-1",
     "org.webjars" % "bootstrap" % "3.0.0",
     "de.sven-jacobs" % "loremipsum" % "1.0",
-    "com.typesafe.play" %% "play-slick" % "0.4.0"
+    "com.typesafe.play" %% "play-slick" % "0.5.0.2-SNAPSHOT"
     
             
   )
