@@ -57,11 +57,11 @@ object Paypal extends Controller {
 	  	Logger.info(s"txn_id=$txn_id, txn_type=$txn_type")
 	    WS.url(url).post(request.body).map { response =>
 	      
-	      response.body match {
-	        case "INVALID" => InternalServerError(s"Oops: txn_id $txn_id is invalid")
-	        case "OK" => Ok(s"Response for txn_id $txn_id:  " + response.body)
-	        case _ => InternalServerError(s"Unexpected response for txn_id $txn_id:  " + response.body)
-	      }			   
+	    response.body match {
+	    	case "INVALID" => InternalServerError(s"Oops: txn_id $txn_id is invalid")
+	    	case "OK" => Ok(s"Response for txn_id $txn_id:  " + response.body)
+	    	case _ => InternalServerError(s"Unexpected response for txn_id $txn_id:  " + response.body)
+	    }			   
 		  
 	//	  params.foreach(l => {
 	//	    val key = l._1
